@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de tarefas</title>
+    <!-- Roboto font embed -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+
+    <!-- Importando o CSS do Font Awesome para usar o ícone do menu (hamburguer) -->
+    <!-- Referências: -->
+    <!-- https://www.w3schools.com/icons/fontawesome_icons_intro.asp -->
+    <!-- https://www.w3schools.com/icons/fontawesome_icons_webapp.asp -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="resources/css/style.css">
+    <!-- NA PÁGINA APENAS (DOM), REFRESH/F5 NA PÁGINA APAGA O CONTEÚDO -->
+    <script type="module" src="/resources/js/part1/main.js"></script>
+
+    <!-- NO NAVEGADOR APENAS (LOCAL STORAGE), REFRESH/F5 NA PÁGINA NÃO APAGA O CONTEÚDO, MAS OUTROS NAVEGADORES/USUÁRIOS NÃO CONSEGUEM VER OS DADOS -->
+    <!--<script type="module" src="/resources/js/part2/main.js"></script>-->
+
+    <!-- MODO COMPLETO ONDE QUALQUER USUÁRIO CONSEGUE VER OS DADOS ACESSANDO DE QUALQUER LUGAR -->
+    <!--<script type="module" src="/resources/js/part3/main.js"></script>-->
+</head>
+<body>
+    <header id="cabecalho">
+        <form>
+            <input id="entrada" placeholder="Informe uma tarefa..." />
+            <button id="add"><i class="fa fa-plus"></i></button>
+        </form>
+    </header>
+
+    <main id="tarefas">
+        <ul id="nao-concluidas" class="lista-tarefas"></ul>
+        <hr class="separador">
+        <ul id="concluidas" class="lista-tarefas"></ul>
+        <!--
+            <li>
+                <p>Tarefa 1</p>
+                <div class="botoes">
+                    <button class="remover">
+                        <i class="fa fa-trash-o"></i>
+                    </button>
+                    <hr class="editar" />
+                    <button class="editar">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <hr />
+                    <button class="concluir">
+                        <i class="fa fa-check-circle-o"></i>
+                    </button>
+                </div>
+            </li>
+            <li>
+                <p>Tarefa 2</p>
+                <div class="botoes">
+                    <button class="remover">
+                        <i class="fa fa-trash-o"></i>
+                    </button>
+                    <hr class="editar" />
+                    <button class="editar">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <hr />
+                    <button class="concluir">
+                        <i class="fa fa-check-circle-o"></i>
+                    </button>
+                </div>
+            </li>
+        -->
+    </main>
+</body>
+</html>

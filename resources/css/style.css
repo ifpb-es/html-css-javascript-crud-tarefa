@@ -1,0 +1,145 @@
+*, *::after, *::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --background-separador-listas: #d8e5e0;
+    --background-tarefa: #fff;
+    --background-tela: #edf0f1;
+    --background-cabecalho: hsl(167, 67%, 44%);
+    --background-cabecalho-darker: hsl(167, 67%, 30%);
+    --background-entrada: rgba(255, 255, 255, 0.2);
+    --color-tarefa: #444;
+    --color-lista-vazia: #aaa;
+    --default-shadow-color: grey;
+    --default-edit-shadow-color: red;
+
+    --border-radius: 10px;
+
+    --default-padding: 1rem;
+    --default-margin: 1rem;
+}
+
+body, input, button {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+}
+
+body {
+    background: var(--background-tela);
+    max-width: 1280px;
+    margin-inline: auto;
+}
+
+#cabecalho {
+    background: var(--background-cabecalho);
+    border-bottom-right-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+    box-shadow: 0px 4px 8px var(--default-shadow-color);
+    padding: var(--default-padding);
+    position: relative;
+}
+
+#entrada {
+    width: 100%;
+    height: 3rem;
+    border-radius: 0.3rem 3rem 3rem 0.3rem;
+    border: 0px;
+    background: var(--background-entrada);
+    text-indent: 1rem;
+    font-size: 1rem;
+    padding-right: 3.1rem;
+    color: var(--background-tarefa);
+}
+
+#entrada:focus, 
+#add:focus, 
+.botoes button:focus {
+    outline: solid var(--background-cabecalho-darker);
+}
+
+#add {
+    width: 3rem;
+    height: 3rem;
+    position: absolute;
+    right: var(--default-padding);
+    border-radius: 1.5rem;
+    background: var(--background-tarefa);
+    border: 0px;
+    color: var(--background-cabecalho);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+#tarefas {
+    padding: var(--default-padding);
+}
+
+.separador {
+    margin: var(--default-margin);
+}
+
+.lista-tarefas {
+    display: flex;
+    flex-direction: column;
+    gap: var(--default-padding);
+}
+
+.lista-tarefas li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--default-padding);
+    background: var(--background-tarefa);
+    color: var(--color-tarefa);
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px var(--default-shadow-color);
+}
+
+.botoes {
+    display: flex;
+    gap: 1rem;
+}
+
+.botoes button {
+    background: none;
+    border: 0px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--background-cabecalho)
+}
+
+.botoes button:hover {
+    color: var(--background-cabecalho-darker)
+}
+
+#concluidas .botoes button.concluir {
+    color: tomato;
+}    
+
+#concluidas .botoes button.concluir:hover {
+    color: red;
+}    
+
+.lista-tarefas::after {
+    text-align: center;
+    color: var(--color-lista-vazia);
+}
+
+#nao-concluidas:empty::after {
+    content: 'Nenhuma tarefa pendente.';
+}
+
+#concluidas:empty::after {
+    content: 'Nenhuma tarefa concluída no momento.';
+}
+
+li.target {
+    box-shadow: 0px 4px 8px var(--default-edit-shadow-color);
+}
+
+#concluidas .editar {
+    display: none;
+}
