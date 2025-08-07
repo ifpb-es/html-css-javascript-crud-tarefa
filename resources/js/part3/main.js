@@ -12,20 +12,24 @@ await renderizarLista();
 // 1. Adicionar/Atualizar uma tarefa
 let addElement = document.getElementById('add');
 addElement.addEventListener('click', async (e) => {
-  e.preventDefault();
-  let entradaElement = document.getElementById('entrada');
-  let valor = entradaElement.value;
-  if (!valor || valor.trim() == '') {
-    // Usuário não informou nada
-    return;
+  try {
+    e.preventDefault();
+    let entradaElement = document.getElementById('entrada');
+    let valor = entradaElement.value;
+    if (!valor || valor.trim() == '') {
+      // Usuário não informou nada
+      return;
+    }
+    if (elementoTarefaEditada) {
+      await editarEntrada(valor);
+    } else {
+      let obj = await adicionarBackend(valor);
+      adicionarEntrada(obj);
+    }
+    entradaElement.value = '';
+  } catch(error) {
+    alert(error.message);
   }
-  if (elementoTarefaEditada) {
-    editarEntrada(valor);
-  } else {
-    let obj = await adicionarBackend(valor);
-    adicionarEntrada(obj);
-  }
-  entradaElement.value = '';
 });
 
 async function editarEntrada(valor) {
@@ -108,44 +112,52 @@ function criarElementoTarefa(obj) {
 
 // 2. Concluir/Desfazer uma tarefa
 async function concluirTarefa(e) {
-  cancelarEventualEdicaoEmAndamento();
-  let elementoClicado = e.target;
-  let elementoItemLista = elementoClicado.closest('li');
-  let elementoListaPai = elementoItemLista.parentNode;
+  try {
+    cancelarEventualEdicaoEmAndamento();
+    let elementoClicado = e.target;
+    let elementoItemLista = elementoClicado.closest('li');
+    let elementoListaPai = elementoItemLista.parentNode;
 
-  let lookupId = elementoItemLista.dataset.lookupId;
-  let ehTarefaConcluída = elementoListaPai.id == 'concluidas';
-  if (ehTarefaConcluída) {
-    await desfazerTarefaBackend(lookupId);
-  } else {
-    await concluirTarefaBackend(lookupId);
+    let lookupId = elementoItemLista.dataset.lookupId;
+    let ehTarefaConcluída = elementoListaPai.id == 'concluidas';
+    if (ehTarefaConcluída) {
+      await desfazerTarefaBackend(lookupId);
+    } else {
+      await concluirTarefaBackend(lookupId);
+    }
+
+    let elementoListaOrigem = elementoListaPai;
+    let elementoListaDestino = null;
+
+    if (elementoListaPai.id == 'nao-concluidas') {
+      elementoListaDestino = document.getElementById('concluidas');
+    } else {
+      elementoListaDestino = document.getElementById('nao-concluidas');
+    }
+
+    elementoListaOrigem.removeChild(elementoItemLista);
+    elementoListaDestino.appendChild(elementoItemLista);
+  } catch(error) {
+    alert(error.message);
   }
-
-  let elementoListaOrigem = elementoListaPai;
-  let elementoListaDestino = null;
-
-  if (elementoListaPai.id == 'nao-concluidas') {
-    elementoListaDestino = document.getElementById('concluidas');
-  } else {
-    elementoListaDestino = document.getElementById('nao-concluidas');
-  }
-
-  elementoListaOrigem.removeChild(elementoItemLista);
-  elementoListaDestino.appendChild(elementoItemLista);
 }
 
 // 3. Remover uma tarefa
 async function removerTarefa(e) {
-  cancelarEventualEdicaoEmAndamento();
-  let resultado = confirm('Tem certeza que deseja remover?');
-  if (resultado) {
-    let elementoClicado = e.target;
-    let elementoItemLista = elementoClicado.closest('li');
+  try {
+    cancelarEventualEdicaoEmAndamento();
+    let resultado = confirm('Tem certeza que deseja remover?');
+    if (resultado) {
+      let elementoClicado = e.target;
+      let elementoItemLista = elementoClicado.closest('li');
 
-    let lookupId = elementoItemLista.dataset.lookupId;
-    await removerBackend(lookupId);
+      let lookupId = elementoItemLista.dataset.lookupId;
+      await removerBackend(lookupId);
 
-    elementoItemLista.remove();
+      elementoItemLista.remove();
+    }
+  } catch(error) {
+    alert(error.message);
   }
 }
 
@@ -177,10 +189,14 @@ function cancelarEventualEdicaoEmAndamento() {
 
 // Renderiza toda a lista inicialmente
 async function renderizarLista() {
-  let tarefas = await listarBackend();
-  if (tarefas) {
-    for(let tarefa of tarefas) {
-      adicionarEntrada(tarefa);
+  try {
+    let tarefas = await listarBackend();
+    if (tarefas) {
+      for(let tarefa of tarefas) {
+        adicionarEntrada(tarefa);
+      }
     }
+  } catch(error) {
+    alert(error.message);
   }
 }

@@ -17,25 +17,27 @@
 
 export async function listarBackend() {
     try {
+        // https://developer.mozilla.org/en-US/docs/Web/API/Response/
         let response = await fetch("http://localhost:8080/demo/api/todo", {
           method: "GET",
           headers: {
               "Content-Type": "application/json"
           }
         });
-        if (response.ok) { // The ok read-only property of the Response interface contains a Boolean stating whether the response was successful (status in the range 200-299) or not: https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
-            return await response.json();
-        } else {
-            // TODO: tratar erro adequadamente
+        if (!response.ok) {
+            let errorData = await response.json();
+            throw new Error('Erro ao tentar recuperar as tarefas: ' + errorData.detail);
         }
-    } catch(ex) {
-        // TODO: tratar erro adequadamente
-        console.error(ex);
+        return await response.json();
+    } catch(error) {
+        console.error(error.message + '\n' + error.stack);
+        throw error;
     }
 }
 
 export async function adicionarBackend(valor) {
     try {
+        // https://developer.mozilla.org/en-US/docs/Web/API/Response/
         let response = await fetch("http://localhost:8080/demo/api/todo", {
           method: "POST",
           headers: {
@@ -43,19 +45,20 @@ export async function adicionarBackend(valor) {
           },
           body: JSON.stringify({descrição: valor})
         });
-        if (response.ok) { // The ok read-only property of the Response interface contains a Boolean stating whether the response was successful (status in the range 200-299) or not: https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
-            return await response.json();
-        } else {
-            // TODO: tratar erro adequadamente
+        if (!response.ok) {
+            let errorData = await response.json();
+            throw new Error('Erro ao tentar adicionar uma tarefa: ' + errorData.detail);
         }
-    } catch(ex) {
-        // TODO: tratar erro adequadamente
-        console.error(ex);
+        return await response.json();
+    } catch(error) {
+        console.error(error.message + '\n' + error.stack);
+        throw error;
     }
 }
 
 export async function editarBackend(lookupId, valor) {
     try {
+        // https://developer.mozilla.org/en-US/docs/Web/API/Response/
         let response = await fetch(`http://localhost:8080/demo/api/todo/${lookupId}`, {
           method: "PATCH",
           headers: {
@@ -63,64 +66,70 @@ export async function editarBackend(lookupId, valor) {
           },
           body: JSON.stringify({descrição: valor})
         });
-        if (response.ok) { // The ok read-only property of the Response interface contains a Boolean stating whether the response was successful (status in the range 200-299) or not: https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
-            return await response.json();
-        } else {
-            // TODO: tratar erro adequadamente
+        if (!response.ok) {
+            let errorData = await response.json();
+            throw new Error('Erro ao tentar editar uma tarefa: ' + errorData.detail);
         }
-    } catch(ex) {
-        // TODO: tratar erro adequadamente
-        console.error(ex);
+        return await response.json();
+    } catch(error) {
+        console.error(error.message + '\n' + error.stack);
+        throw error;
     }
 }
 
 export async function removerBackend(lookupId) {
     try {
+        // https://developer.mozilla.org/en-US/docs/Web/API/Response/
         let response = await fetch(`http://localhost:8080/demo/api/todo/${lookupId}`, {
           method: "DELETE",
           headers: {
               "Content-Type": "application/json"
           }
         });
-        if (!response.ok) { // The ok read-only property of the Response interface contains a Boolean stating whether the response was successful (status in the range 200-299) or not: https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
-            // TODO: tratar erro adequadamente
+        if (!response.ok) {
+            let errorData = await response.json();
+            throw new Error('Erro ao tentar remover uma tarefa: ' + errorData.detail);
         }
-    } catch(ex) {
-        // TODO: tratar erro adequadamente
-        console.error(ex);
+    } catch(error) {
+        console.error(error.message + '\n' + error.stack);
+        throw error;
     }
 }
 
 export async function concluirTarefaBackend(lookupId) {
     try {
+        // https://developer.mozilla.org/en-US/docs/Web/API/Response/
         let response = await fetch(`http://localhost:8080/demo/api/todo/${lookupId}/fazer`, {
           method: "PATCH",
           headers: {
               "Content-Type": "application/json"
           }
         });
-        if (!response.ok) { // The ok read-only property of the Response interface contains a Boolean stating whether the response was successful (status in the range 200-299) or not: https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
-            // TODO: tratar erro adequadamente
+        if (!response.ok) {
+            let errorData = await response.json();
+            throw new Error('Erro ao tentar concluir uma tarefa: ' + errorData.detail);
         }
-    } catch(ex) {
-        // TODO: tratar erro adequadamente
-        console.error(ex);
+    } catch(error) {
+        console.error(error.message + '\n' + error.stack);
+        throw error;
     }
 }
 
 export async function desfazerTarefaBackend(lookupId) {
     try {
+        // https://developer.mozilla.org/en-US/docs/Web/API/Response/
         let response = await fetch(`http://localhost:8080/demo/api/todo/${lookupId}/desfazer`, {
           method: "PATCH",
           headers: {
               "Content-Type": "application/json"
           }
         });
-        if (!response.ok) { // The ok read-only property of the Response interface contains a Boolean stating whether the response was successful (status in the range 200-299) or not: https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
-            // TODO: tratar erro adequadamente
+        if (!response.ok) {
+            let errorData = await response.json();
+            throw new Error('Erro ao tentar desfazer conclusão de uma tarefa: ' + errorData.detail);
         }
-    } catch(ex) {
-        // TODO: tratar erro adequadamente
-        console.error(ex);
+    } catch(error) {
+        console.error(error.message + '\n' + error.stack);
+        throw error;
     }
 }
